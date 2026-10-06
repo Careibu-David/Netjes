@@ -1,0 +1,389 @@
+@import "tailwindcss";
+@import "@fontsource-variable/manrope";
+
+@theme {
+  --font-sans: "Manrope Variable", ui-sans-serif, system-ui, sans-serif;
+
+  /* RAL 3007 Schwarzrot — Amsterdam purple brown (primary brand) */
+  --color-amsterdam-purple-brown: #3e2022;
+  --color-amsterdam-purple-brown-900: #251416;
+  --color-amsterdam-purple-brown-700: #562e31;
+  --color-amsterdam-purple-brown-500: #744248;
+  --color-amsterdam-purple-brown-100: #ebe3e4;
+
+  /* Canal green — secondary brand (former primary) */
+  --color-bollard: #1f3b33;
+  --color-bollard-900: #122822;
+  --color-bollard-700: #2a5247;
+  --color-bollard-500: #3d6b5e;
+  --color-bollard-100: #e4ebe8;
+
+  --color-cream: #f6f2ea;
+  --color-paper: #fbf9f4;
+  --color-ink: #1c1f1e;
+  --color-ink-soft: #4a504d;
+
+  --color-accent: #e8833a;
+  --color-accent-600: #c96a24;
+  --color-accent-100: #fbe7d7;
+
+  --color-sage: #c9d3cc;
+  --color-stone: #8a938e;
+  --color-line: #e2ddd2;
+
+  --color-brick: #b4553f;
+  --color-brick-soft: #d9a493;
+
+  --radius-card: 1.25rem;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    @apply bg-cream font-sans text-ink antialiased;
+    font-feature-settings: "ss01", "cv11";
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply tracking-tight text-balance;
+  }
+
+  p {
+    @apply text-pretty;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+}
+
+/* MapLibre popup restyle */
+.maplibregl-popup-content {
+  @apply rounded-xl border border-line bg-paper px-4 py-3 font-sans text-ink shadow-lg;
+}
+.maplibregl-popup-close-button {
+  @apply px-2 text-lg text-stone;
+}
+.maplibregl-ctrl-group {
+  @apply overflow-hidden rounded-lg! border border-line shadow-none!;
+}
+.maplibregl-cooperative-gesture-screen {
+  @apply font-sans;
+}
+
+/* Attribution: collapsed “i” by default; full text only when opened */
+.maplibregl-ctrl-attrib.maplibregl-compact:not([open]) {
+  padding: 2px 24px 2px 0 !important;
+}
+.maplibregl-ctrl-attrib.maplibregl-compact:not([open]) .maplibregl-ctrl-attrib-inner {
+  display: none !important;
+}
+
+/* Compare diagram — “Met Netjes” scroll sequence (smooth CSS-driven) */
+@property --good-card-tone {
+  syntax: "<number>";
+  initial-value: 0;
+  inherits: true;
+}
+
+.compare-good-card {
+  --compare-step-pulse: 1s;
+  --compare-step-gap: 0.5s;
+  --compare-step-block: calc(var(--compare-step-pulse) + var(--compare-step-gap));
+  --compare-tone-duration: 0.5s;
+  --compare-steps: 3;
+  --good-card-tone: 0;
+
+  border-color: var(--color-bollard);
+  background-color: color-mix(
+    in srgb,
+    var(--color-paper) calc((1 - var(--good-card-tone)) * 100%),
+    var(--color-bollard) calc(var(--good-card-tone) * 100%)
+  );
+  color: color-mix(
+    in srgb,
+    var(--color-ink) calc((1 - var(--good-card-tone)) * 100%),
+    var(--color-cream) calc(var(--good-card-tone) * 100%)
+  );
+}
+
+.compare-good-card__title {
+  color: color-mix(
+    in srgb,
+    var(--color-stone) calc((1 - var(--good-card-tone)) * 100%),
+    var(--color-accent) calc(var(--good-card-tone) * 100%)
+  );
+}
+
+.compare-good-card__chip {
+  width: 2.75rem;
+  height: 2.75rem;
+  background-color: color-mix(
+    in srgb,
+    color-mix(in srgb, var(--color-bollard) 14%, var(--color-paper)) calc((1 - var(--good-card-tone)) * 100%),
+    color-mix(in srgb, var(--color-cream) 14%, transparent) calc(var(--good-card-tone) * 100%)
+  );
+  color: color-mix(
+    in srgb,
+    var(--color-bollard) calc((1 - var(--good-card-tone)) * 100%),
+    var(--color-cream) calc(var(--good-card-tone) * 100%)
+  );
+}
+
+.compare-good-card__label {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.compare-good-card__icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.compare-good-card__chip--accent {
+  background-color: var(--color-accent);
+  color: var(--color-ink);
+}
+
+.compare-good-card__arrow {
+  opacity: 0;
+  max-width: 0;
+  margin-inline: 0;
+  overflow: hidden;
+  transform: scaleX(0.25);
+  transform-origin: left center;
+  color: color-mix(
+    in srgb,
+    var(--color-stone) calc((1 - var(--good-card-tone)) * 100%),
+    color-mix(in srgb, var(--color-cream) 55%, transparent) calc(var(--good-card-tone) * 100%)
+  );
+}
+
+.compare-good-card[data-active="true"] {
+  animation: compare-good-tone var(--compare-tone-duration) cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation-delay: calc(
+    (var(--compare-steps) - 1) * var(--compare-step-block) + var(--compare-step-pulse) + 0.45s
+  );
+}
+
+.compare-good-card[data-active="true"] li[data-step] .compare-good-card__step-inner,
+.compare-good-card[data-active="true"] li[data-step] .compare-good-card__chip,
+.compare-good-card[data-active="true"] li[data-step] .compare-good-card__label,
+.compare-good-card[data-active="true"] li[data-step] .compare-good-card__icon {
+  animation-duration: var(--compare-step-pulse);
+  animation-timing-function: cubic-bezier(0.33, 0, 0.2, 1);
+  animation-fill-mode: both;
+  animation-delay: calc(var(--step-index) * var(--compare-step-block));
+}
+
+.compare-good-card[data-active="true"] li[data-step] .compare-good-card__step-inner {
+  animation-name: compare-good-step-pulse-gap;
+}
+
+.compare-good-card[data-active="true"] li[data-step] .compare-good-card__chip {
+  animation-name: compare-good-step-pulse-chip;
+}
+
+.compare-good-card[data-active="true"] li[data-step] .compare-good-card__label {
+  animation-name: compare-good-step-pulse-label;
+}
+
+.compare-good-card[data-active="true"] li[data-step] .compare-good-card__icon {
+  animation-name: compare-good-step-pulse-icon;
+}
+
+.compare-good-card[data-active="true"] .compare-good-card__arrow {
+  animation: compare-good-arrow-in 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--arrow-index) * var(--compare-step-block) + var(--compare-step-pulse));
+}
+
+@keyframes compare-good-step-pulse-gap {
+  0%,
+  100% {
+    gap: 0.75rem;
+  }
+  38%,
+  62% {
+    gap: 1rem;
+  }
+}
+
+@keyframes compare-good-step-pulse-chip {
+  0%,
+  100% {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+  38%,
+  62% {
+    width: 3.3rem;
+    height: 3.3rem;
+  }
+}
+
+@keyframes compare-good-step-pulse-label {
+  0%,
+  100% {
+    font-size: 0.9375rem;
+  }
+  38%,
+  62% {
+    font-size: 1.125rem;
+  }
+}
+
+@keyframes compare-good-step-pulse-icon {
+  0%,
+  100% {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  38%,
+  62% {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+}
+
+@keyframes compare-good-arrow-in {
+  from {
+    opacity: 0;
+    max-width: 0;
+    margin-inline: 0;
+    transform: scaleX(0.25);
+  }
+  to {
+    opacity: 1;
+    max-width: 1.5rem;
+    margin-inline: 0.375rem;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes compare-good-tone {
+  from {
+    --good-card-tone: 0;
+  }
+  to {
+    --good-card-tone: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .compare-good-card[data-active="true"] {
+    animation: none;
+    --good-card-tone: 1;
+  }
+
+  .compare-good-card[data-active="true"] li[data-step] .compare-good-card__step-inner,
+  .compare-good-card[data-active="true"] li[data-step] .compare-good-card__chip,
+  .compare-good-card[data-active="true"] li[data-step] .compare-good-card__label,
+  .compare-good-card[data-active="true"] li[data-step] .compare-good-card__icon {
+    animation: none;
+  }
+
+  .compare-good-card[data-active="true"] .compare-good-card__arrow {
+    animation: none;
+    opacity: 1;
+    max-width: 1.5rem;
+    margin-inline: 0.375rem;
+    transform: none;
+  }
+}
+
+.idea-caption-radio {
+  animation: idea-caption-radio-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes idea-caption-radio-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-accent) 65%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 12px color-mix(in srgb, var(--color-accent) 0%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .idea-caption-radio {
+    animation: none;
+  }
+}
+
+.how-steps__card {
+  --how-step-duration: 1.25s;
+  --how-step-stagger: 1.25s;
+  transform-origin: 50% 60%;
+  will-change: transform;
+}
+
+.how-steps[data-active="true"] .how-steps__card {
+  animation: how-step-jiggle var(--how-step-duration) cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  animation-delay: calc(var(--step-index) * var(--how-step-stagger));
+}
+
+@keyframes how-step-jiggle {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  20% {
+    transform: scale(1.05) rotate(-1.5deg);
+  }
+  38% {
+    transform: scale(1.06) rotate(1.5deg);
+  }
+  54% {
+    transform: scale(1.05) rotate(-1deg);
+  }
+  70% {
+    transform: scale(1.03) rotate(0.5deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .how-steps[data-active="true"] .how-steps__card {
+    animation: none;
+  }
+}
+
+.impact-benefits__card {
+  --impact-card-duration: calc(5s / 6);
+  --impact-card-stagger: calc(5s / 6);
+  transform-origin: 50% 60%;
+  will-change: transform;
+}
+
+.impact-benefits[data-active="true"] .impact-benefits__card {
+  animation: how-step-jiggle var(--impact-card-duration) cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  animation-delay: calc(var(--step-index) * var(--impact-card-stagger));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .impact-benefits[data-active="true"] .impact-benefits__card {
+    animation: none;
+  }
+}
