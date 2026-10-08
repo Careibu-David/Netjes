@@ -1,5 +1,5 @@
 export const site = {
-  name: "Project name",
+  name: "Amsterdam Netjes",
   contactEmail: "hello@example.com",
   city: "Amsterdam",
   japanWasteNetArticleUrl: "https://www.asahi.com/ajw/articles/14989457",
