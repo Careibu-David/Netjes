@@ -85,7 +85,7 @@ export const nl: Dictionary = {
       label: "Vergelijking van wat er met een vuilniszak gebeurt met en zonder bescherming",
       without: {
         title: "Zonder Netjes",
-        steps: ["Vuilnis naar buiten", "Vogels", "Verspreid afval", "Opruimen"],
+        steps: ["Vuilnis naar buiten", "Vogels", "Verspreid afval", "Vuilnis opgehaald", "Opruimen"],
       },
       with: {
         title: "Met Netjes",

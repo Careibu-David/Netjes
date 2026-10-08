@@ -9,7 +9,7 @@ type CompareDiagramProps = {
   with: Flow;
 };
 
-const withoutIcons: StepIconName[] = ["bag", "bird", "scatter", "broom"];
+const withoutIcons: StepIconName[] = ["bag", "bird", "scatter", "truck", "broom"];
 const withIcons: StepIconName[] = ["bag", "net", "truck"];
 
 function FlowRowBad({ flow, icons }: { flow: Flow; icons: StepIconName[] }) {

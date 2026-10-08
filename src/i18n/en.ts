@@ -83,7 +83,7 @@ export const en = {
       label: "Comparison of what happens to a garbage bag with and without protection",
       without: {
         title: "Without Netjes",
-        steps: ["Rubbish goes outside", "Birds", "Scattered waste", "Cleanup"],
+        steps: ["Rubbish goes outside", "Birds", "Scattered waste", "Rubbish collected", "Cleanup"],
       },
       with: {
         title: "With Netjes",
