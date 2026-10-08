@@ -9,6 +9,7 @@ import { Container } from "./ui/Container";
 export function Navbar() {
   const { t } = useLanguage();
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   const links = [
     { href: "#problem", label: t.nav.problem },
@@ -16,6 +17,13 @@ export function Navbar() {
     { href: "#map", label: t.nav.map },
     { href: "#faq", label: t.nav.faq },
   ];
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -27,8 +35,8 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-cream/95 backdrop-blur-sm">
       <Container className="flex h-16 items-center justify-between gap-6 lg:h-[72px]">
-        <a href="#top" aria-label="Amsterdam Netjes — Home" onClick={() => setOpen(false)}>
-          <Logo />
+        <a href="#top" aria-label="Amsterdam Netjes — Home" className="lg:flex-1" onClick={() => setOpen(false)}>
+          <Logo compact={scrolled} />
         </a>
 
         <nav aria-label="Main" className="hidden items-center gap-8 lg:flex">
@@ -39,7 +47,7 @@ export function Navbar() {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-3 lg:flex">
+        <div className="hidden items-center justify-end gap-3 lg:flex lg:flex-1">
           <LanguageToggle />
           <ButtonLink href="#apply">{t.nav.apply}</ButtonLink>
         </div>

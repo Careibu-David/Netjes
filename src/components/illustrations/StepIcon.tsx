@@ -2,7 +2,10 @@ import type { ReactNode } from "react";
 
 export type StepIconName = "bag" | "bird" | "tornBag" | "scatter" | "net" | "truck" | "broom" | "delivery";
 
-const BAG = "M9.5 27 C6 20 8 14 13 12 L11 7.5 L16 9.5 L21 7.5 L19 12 C24 14 26 20 22.5 27 Z";
+export const STEP_ICON_BAG_PATH =
+  "M9.5 27 C6 20 8 14 13 12 L11 7.5 L16 9.5 L21 7.5 L19 12 C24 14 26 20 22.5 27 Z";
+
+const BAG = STEP_ICON_BAG_PATH;
 
 const paths: Record<StepIconName, ReactNode> = {
   bag: <path d={BAG} />,
